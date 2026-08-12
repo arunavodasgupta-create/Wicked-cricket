@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wicked Cricket - Book Your Slot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #E8641E;
+    --orange-dark: #B84B13;
+    --orange-deep: #7a2f0c;
+    --violet: #7c5cff;
+    --violet-dim: #4a3a99;
+    --cream: #FFF8F1;
+    --ink: #2b1a10;
+    --muted: #8a7263;
+    --accent: var(--orange);
+    --accent-dim: var(--orange-dark);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+  }
+  h1, h2, .display {
+    font-family: 'Teko', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  header {
+    position: relative;
+    background: linear-gradient(160deg, var(--orange), var(--orange-dark));
+    color: #fff;
+    padding: 30px 20px 40px;
+    text-align: center;
+    overflow: hidden;
+  }
+  header svg.swoosh {
+    position: absolute;
+    top: -20px; left: 0;
+    width: 100%; height: 100px;
+    opacity: 0.18;
+  }
+  header .logo-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  header img.logo {
+    width: 92px; height: 92px;
+    border-radius: 50%;
+    background: #fff;
+    padding: 8px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  }
+  header h1 {
+    margin: 4px 0 0;
+    font-size: 2.6rem;
+    letter-spacing: 1px;
+  }
+  header p.tag {
+    margin: 0;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ffe4d1;
+  }
+
+  .info-strip {
+    background: var(--orange-deep);
+    color: #ffe4d1;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px;
+  }
+  .info-strip span { display: flex; align-items: center; gap: 6px; }
+
+  .container { max-width: 780px; margin: 0 auto; padding: 24px 18px 40px; }
+
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 22px;
+    box-shadow: 0 4px 18px rgba(122,47,12,0.08);
+  }
+
+  h2.section-title { margin: 0 0 4px; font-size: 1.6rem; color: var(--orange-dark); }
+  h2.section-title.violet { color: var(--violet); }
+  .section-sub { margin: 0 0 12px; font-size: 0.8rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+  th, td { text-align: left; padding: 9px 6px; border-bottom: 1px solid #f1e6da; font-size: 0.95rem; }
+  th { color: var(--muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; }
+  .price { font-family: 'Teko', sans-serif; font-size: 1.2rem; color: var(--orange); }
+  .price.violet { color: var(--violet); }
+
+  label { display: block; margin: 16px 0 6px; font-weight: 600; font-size: 0.85rem; color: var(--muted); }
+  select, input {
+    width: 100%; padding: 11px; border-radius: 8px; border: 1px solid #ecdccb;
+    font-size: 1rem; background: #fffdfa; font-family: 'Inter', sans-serif;
+  }
+  select:focus, input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  button {
+    margin-top: 18px; width: 100%; padding: 13px; border: none; border-radius: 8px;
+    background: var(--orange-deep); color: #fff; font-size: 1rem; font-weight: 600;
+    cursor: pointer; transition: background 0.15s, transform 0.1s;
+    font-family: 'Inter', sans-serif;
+  }
+  button:hover { background: #5c2409; }
+  button:active { transform: scale(0.98); }
+  button:disabled { background: #ccb9a8; cursor: not-allowed; }
+
+  .status { font-size: 0.85rem; color: var(--muted); margin-top: 12px; }
+
+  .scoreboard {
+    background: var(--orange-deep);
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .scoreboard:empty { display: none; }
+  .slot-btn {
+    font-family: 'Teko', sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: 1px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--accent-dim);
+    background: #5c2409;
+    color: #ffd9b8;
+    cursor: pointer;
+    width: auto;
+    margin-top: 0;
+    box-shadow: 0 0 0 rgba(232,100,30,0);
+    transition: box-shadow 0.15s, background 0.15s;
+  }
+  .slot-btn:hover:not(:disabled) { box-shadow: 0 0 10px var(--accent); }
+  .slot-btn.selected {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 14px var(--accent);
+  }
+  .slot-btn:disabled {
+    background: #3a1c0a; color: #7a6455; border-color: #4a2810; cursor: not-allowed;
+  }
+
+  .whatsapp-btn { background: #1e9e56; }
+  .whatsapp-btn:hover { background: #17843f; }
+
+  .ticket {
+    display: none;
+    margin-top: 18px;
+    position: relative;
+    background: #fffaf3;
+    border: 1px dashed #e3cdb4;
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .ticket::before, .ticket::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 20px; height: 20px;
+    background: var(--cream);
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+  .ticket::before { left: -11px; }
+  .ticket::after { right: -11px; }
+  .ticket .stub-title { font-family: 'Teko', sans-serif; font-size: 1.4rem; color: var(--orange-dark); margin: 0 0 6px; }
+  .ticket .stub-line { font-size: 0.9rem; color: var(--ink); margin: 2px 0; }
+  .ticket .stub-divider { border-top: 1px dashed #e3cdb4; margin: 12px 0; }
+
+  footer { text-align: center; padding: 22px; color: var(--muted); font-size: 0.8rem; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header>
+  <svg class="swoosh" viewBox="0 0 800 100" preserveAspectRatio="none">
+    <path d="M0,70 C220,150 520,-30 800,60 L800,0 L0,0 Z" fill="#ffffff"></path>
+  </svg>
+  <div class="logo-wrap">
+    <img class="logo" src="logo.png" alt="Wicked Cricket logo">
+    <h1>WICKED CRICKET</h1>
+    <p class="tag">Bowling Machine Practice · PS5 Zone</p>
+  </div>
+</header>
+
+<div class="info-strip">
+  <span>📍 Block 1, Venkatesh Tower, Shastri Nagar, Kadma, Jamshedpur, Jharkhand 831005</span>
+  <span>🕕 Daily 6:00 AM – 10:00 PM</span>
+  <span>📞 8809777266</span>
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <h2 class="section-title">Cricket Practice</h2>
+    <p class="section-sub">Bowling machine · operator assisted</p>
+    <table>
+      <tr><th>Overs</th><th>Slot</th><th>Price</th></tr>
+      <tr><td>10 overs</td><td>10 min</td><td class="price">₹299</td></tr>
+      <tr><td>20 overs</td><td>20 min</td><td class="price">₹499</td></tr>
+      <tr><td>30 overs</td><td>30 min</td><td class="price">₹699</td></tr>
+      <tr><td>40 overs</td><td>40 min</td><td class="price">₹899</td></tr>
+      <tr><td>50 overs</td><td>50 min</td><td class="price">₹1099</td></tr>
+    </table>
+
+    <h2 class="section-title violet" style="margin-top:24px;">PS5 Zone</h2>
+    <p class="section-sub">Multiple games available</p>
+    <table>
+      <tr><th>Duration</th><th>Price</th></tr>
+      <tr><td>30 minutes</td><td class="price violet">₹99</td></tr>
+      <tr><td>60 minutes</td><td class="price violet">₹149</td></tr>
+    </table>
+  </div>
+
+  <div class="card" id="bookingCard">
+    <h2 class="section-title">Book Your Slot</h2>
+
+    <label for="resource">Service</label>
+    <select id="resource">
+      <option value="cricket">Cricket Practice</option>
+      <option value="ps5">PS5 Zone</option>
+    </select>
+
+    <label for="package">Package</label>
+    <select id="package"></select>
+
+    <label for="date">Date</label>
+    <input type="date" id="date">
+
+    <button id="checkBtn">Check Available Slots</button>
+    <div class="status" id="slotStatus"></div>
+    <div class="scoreboard" id="slotList"></div>
+
+    <div id="detailsSection" style="display:none;">
+      <label for="name">Your Name</label>
+      <input type="text" id="name" placeholder="Full name">
+      <label for="phone">Your Phone Number</label>
+      <input type="tel" id="phone" placeholder="10-digit number">
+      <button id="bookBtn">Confirm Booking</button>
+    </div>
+
+    <div class="ticket" id="confirmation"></div>
+  </div>
+
+</div>
+
+<footer>Wicked Cricket · 8809777266</footer>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw-oeRFeQLQ_GPgFfR_tmZZZJJzkgeBUMFmSsFswrAsDJVupDkS1F1SagT3eZoppr2Q/exec';
+const OWNER_WHATSAPP = '918292028755';
+
+const OPEN_MIN = 6 * 60;
+const CLOSE_MIN = 22 * 60;
+
+const PACKAGES = {
+  cricket: {
+    10: { price: 299, duration: 10, label: '10 overs - ₹299' },
+    20: { price: 499, duration: 20, label: '20 overs - ₹499' },
+    30: { price: 699, duration: 30, label: '30 overs - ₹699' },
+    40: { price: 899, duration: 40, label: '40 overs - ₹899' },
+    50: { price: 1099, duration: 50, label: '50 overs - ₹1099' }
+  },
+  ps5: {
+    30: { price: 99, duration: 30, label: '30 min - ₹99' },
+    60: { price: 149, duration: 60, label: '60 min - ₹149' }
+  }
+};
+
+const resourceSel = document.getElementById('resource');
+const packageSel = document.getElementById('package');
+const dateInput = document.getElementById('date');
+const slotList = document.getElementById('slotList');
+const slotStatus = document.getElementById('slotStatus');
+const detailsSection = document.getElementById('detailsSection');
+const confirmation = document.getElementById('confirmation');
+const bookingCard = document.getElementById('bookingCard');
+
+let selectedSlot = null;
+
+function fillPackages() {
+  const pkgs = PACKAGES[resourceSel.value];
+  packageSel.innerHTML = '';
+  Object.keys(pkgs).forEach(key => {
+    const opt = document.createElement('option');
+    opt.value = key;
+    opt.textContent = pkgs[key].label;
+    packageSel.appendChild(opt);
+  });
+  if (resourceSel.value === 'ps5') {
+    bookingCard.style.setProperty('--accent', 'var(--violet)');
+    bookingCard.style.setProperty('--accent-dim', 'var(--violet-dim)');
+  } else {
+    bookingCard.style.setProperty('--accent', 'var(--orange)');
+    bookingCard.style.setProperty('--accent-dim', 'var(--orange-dark)');
+  }
+}
+resourceSel.addEventListener('change', fillPackages);
+fillPackages();
+
+const today = new Date().toISOString().split('T')[0];
+dateInput.value = today;
+dateInput.min = today;
+
+function minutesToLabel(mins) {
+  let h = Math.floor(mins / 60);
+  const m = mins % 60;
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  let h12 = h % 12; if (h12 === 0) h12 = 12;
+  return h12 + ':' + String(m).padStart(2, '0') + ' ' + ampm;
+}
+
+document.getElementById('checkBtn').addEventListener('click', async () => {
+  const date = dateInput.value;
+  if (!date) { slotStatus.textContent = 'Please pick a date first.'; return; }
+
+  const resource = resourceSel.value;
+  const pkgKey = packageSel.value;
+  const duration = PACKAGES[resource][pkgKey].duration;
+
+  slotStatus.textContent = 'Checking availability...';
+  slotList.innerHTML = '';
+  detailsSection.style.display = 'none';
+  confirmation.style.display = 'none';
+  selectedSlot = null;
+
+  let existing = [];
+  try {
+    const res = await fetch(SCRIPT_URL + '?date=' + date);
+    existing = await res.json();
+  } catch (err) {
+    slotStatus.textContent = 'Could not reach the booking system. Check your internet and try again.';
+    return;
+  }
+
+  const sameResource = existing.filter(b => b.resource === resource);
+
+  const candidates = [];
+  for (let start = OPEN_MIN; start + duration <= CLOSE_MIN; start += 10) {
+    const overlap = sameResource.some(b =>
+      start < (b.start + b.duration) && b.start < (start + duration)
+    );
+    candidates.push({ start, available: !overlap });
+  }
+
+  const availableCount = candidates.filter(c => c.available).length;
+  slotStatus.textContent = availableCount + ' of ' + candidates.length + ' slots available for this package today.';
+
+  candidates.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'slot-btn';
+    btn.textContent = minutesToLabel(c.start);
+    btn.disabled = !c.available;
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedSlot = { start: c.start, label: minutesToLabel(c.start), duration, resource, pkgKey };
+      detailsSection.style.display = 'block';
+    });
+    slotList.appendChild(btn);
+  });
+});
+
+document.getElementById('bookBtn').addEventListener('click', async () => {
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const date = dateInput.value;
+
+  if (!selectedSlot) { alert('Please select a time slot.'); return; }
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+
+  const resource = selectedSlot.resource;
+  const pkgKey = selectedSlot.pkgKey;
+  const pkgInfo = PACKAGES[resource][pkgKey];
+
+  const payload = {
+    date, resource, start: selectedSlot.start, duration: selectedSlot.duration,
+    package: pkgInfo.label, startLabel: selectedSlot.label, name, phone
+  };
+
+  const bookBtn = document.getElementById('bookBtn');
+  bookBtn.disabled = true;
+  bookBtn.textContent = 'Booking...';
+
+  try {
+    await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+  } catch (err) {}
+
+  const waText = encodeURIComponent(
+    'New booking - Wicked Cricket\n' +
+    'Service: ' + (resource === 'cricket' ? 'Cricket Practice' : 'PS5 Zone') + '\n' +
+    'Package: ' + pkgInfo.label + '\n' +
+    'Date: ' + date + '\n' +
+    'Time: ' + selectedSlot.label + '\n' +
+    'Name: ' + name + '\n' +
+    'Phone: ' + phone
+  );
+
+  confirmation.style.display = 'block';
+  confirmation.innerHTML =
+    '<p class="stub-title">🏏 Booking Confirmed</p>' +
+    '<p class="stub-line"><strong>' + (resource === 'cricket' ? 'Cricket Practice' : 'PS5 Zone') + '</strong> — ' + pkgInfo.label + '</p>' +
+    '<p class="stub-line">' + date + ' · ' + selectedSlot.label + '</p>' +
+    '<p class="stub-line">' + name + ' · ' + phone + '</p>' +
+    '<div class="stub-divider"></div>' +
+    '<a href="https://wa.me/' + OWNER_WHATSAPP + '?text=' + waText + '" target="_blank">' +
+    '<button class="whatsapp-btn" type="button">Confirm via WhatsApp</button></a>';
+
+  bookBtn.disabled = false;
+  bookBtn.textContent = 'Confirm Booking';
+});
+</script>
+</body>
+</html>
