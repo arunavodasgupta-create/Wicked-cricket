@@ -148,7 +148,7 @@
 
 <script>
 // ===== EDIT THIS LINE with your Apps Script Web App URL =====
-const SCRIPT_URL = 'https://github.com/arunavodasgupta-create/Wicked-cricket.git';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw-oeRFeQLQ_GPgFfR_tmZZZJJzkgeBUMFmSsFswrAsDJVupDkS1F1SagT3eZoppr2Q/exec';
 const OWNER_WHATSAPP = '918292028755'; // 91 + number, no spaces or +
 // ================================================================
 
